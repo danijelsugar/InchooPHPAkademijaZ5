@@ -11,10 +11,10 @@ final class App
         $pathInfo = Request::pathInfo();
         $pathInfo = trim($pathInfo,'/');
         $pathParts = explode('/',$pathInfo);
-        print_r($pathParts);
+
 
         //resolve controller
-        if (!isset($pathParts[0])) {
+        if (!isset($pathParts[0]) || empty($pathParts[0])) {
             $controller = 'Index';
         } else {
             $controller = ucfirst(strtolower($pathParts[0]));
@@ -22,8 +22,12 @@ final class App
 
         $controller .= 'Controller';
 
+        echo $controller . "<br>";
+
+
+
         //resolve action
-        if (!isset($pathParts[1])) {
+        if (!isset($pathParts[1]) || empty($pathParts[1])) {
             $action = 'index';
         } else {
             $action = strtolower($pathParts[1]);
@@ -35,6 +39,8 @@ final class App
             $controllerInstance->$action();
         } else {
             header("HTTP/1.0 404 Not Found");
+            $view = new View();
+            $view->render('404');
         }
     }
 
