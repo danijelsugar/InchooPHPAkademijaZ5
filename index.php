@@ -18,9 +18,13 @@ set_include_path($includePaths);
 //register autoloader, to auto include classes when needed
 spl_autoload_register(function($class)
 {
-    $classPath = strtr($class, '\\', PATH_SEPARATOR) . '.php';
 
-    return include $classPath;
+    $classPath = strtr($class, '\\', DIRECTORY_SEPARATOR) . '.php';
+
+    if(file_exists(BP . 'app/model/' . $classPath) || file_exists(BP . 'app/controller/' . $classPath)) {
+        return include $classPath;
+    }
+
 });
 
 App::start();
