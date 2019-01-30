@@ -1,4 +1,4 @@
-<IfModule rewrite_mod.c>
+<IfModule mod_rewrite.c>
 
 RewriteEngine On
 
